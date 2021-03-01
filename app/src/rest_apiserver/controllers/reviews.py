@@ -60,67 +60,14 @@ def approveProvisionRequest():
         
         # Create notification for developer (requester)
         create_notification(
-            title = "Provision Request Approved", 
-            description = "Your provision request " + str(provision_request["_id"]) + " has been approved.",
+            title = "Provision Request" + str(status), 
+            description = "Your provision request " + str(provision_request["_id"]) + " has been " + str(status),
             user = provision_request["requested_by"]
         )
     except ValueError as e:
-        return Response(toJSON(failure_resp(e.message, 400)), 400, mimetype='application/json')
+        return Response(toJSON(failure_resp(str(e), 400)), 400, mimetype='application/json')
     except Exception as e:
-        return Response(toJSON(failure_resp(e.message, 500)), 500, mimetype='application/json')
-    return Response(toJSON(response), 200, mimetype='application/json')
-
-
-@app.route('/'+app.config['API_VERSION']+'/rejectProvisionRequest', methods=['POST'])
-def rejectProvisionRequest():
-    """ 
-    Reject ```provisionRequest``` 
-    
-    Accepts ```{_id: <ObjectId>, reviewd_by: <ObjectId>}``` as request json argument
-    """
-    response = {}
-    try:
-        # Get request parameters and perform sanity check
-        if not request.json:
-            raise ValueError("Empty json body provided!!!")
-        
-        _id = request.json['_id'] if '_id' in request.json else None
-        reviewed_by = request.json['reviewed_by'] if 'reviewed_by' in request.json else None
-        logger.info("_id: " + str(_id) + "   reviewed_by: " + str(reviewed_by) )
-
-        if not _id or not reviewed_by: raise ValueError("Must provide provisionRequest id and reviewer id!!!")
-
-        # Update provision request 
-        provisionRequests = app.data.driver.db['provisionRequests']
-        query = { "_id": ObjectId(_id) }
-        provision_request = provisionRequests.find_one(query, sort=[("_created", -1)])
-        if not provision_request: raise ValueError("Provision Request does not exist")
-        update = {
-            "$set":
-            {
-                "reviewed_by": ObjectId(reviewed_by),
-                "status": "REJECTED",
-            }
-        }
-        ret = provisionRequests.update(query, update, upsert = False)
-        logger.debug("provision request update response: " + str(ret))
-
-        # Create response object
-        response = {
-            "status": "APPROVED",
-            "_id": str(provision_request['_id'])
-        }
-        
-        # Create notification for developer (requester)
-        create_notification(
-            title = "Provision Request Rejected", 
-            description = "Your provision request " + str(provision_request["_id"]) + " has been rejected.",
-            user = provision_request["requested_by"]
-        )
-    except ValueError as e:
-        return Response(toJSON(failure_resp(e.message, 400)), 400, mimetype='application/json')
-    except Exception as e:
-        return Response(toJSON(failure_resp(e.message, 500)), 500, mimetype='application/json')
+        return Response(toJSON(failure_resp(str(e), 500)), 500, mimetype='application/json')
     return Response(toJSON(response), 200, mimetype='application/json')
 
 
@@ -129,7 +76,8 @@ def approveExtensionRequest():
     """ 
     Approve ```extensionRequest``` 
 
-    Accepts ```{_id: <ObjectId>, reviewd_by: <ObjectId>}``` as request json argument
+    Accepts ```{_id: <extension request id>, reviewd_by: <reviewer user id>, status: <"APPROVED"/"REJECTED">}``` 
+    as request json argument
     """
     response = {}
     try:
@@ -139,20 +87,24 @@ def approveExtensionRequest():
         
         _id = request.json['_id'] if '_id' in request.json else None
         reviewed_by = request.json['reviewed_by'] if 'reviewed_by' in request.json else None
-        logger.info("_id: " + str(_id) + "   reviewed_by: " + str(reviewed_by) )
+        status = request.json['status'] if 'status' in request.json else None
+        logger.debug("_id: " + str(_id) + "   reviewed_by: " + str(reviewed_by) + "   status: " + str(status) )
 
-        if not _id or not reviewed_by: raise ValueError("Must provide extensionRequest id and reviewer id!!!")
+        if not _id or not reviewed_by or not status in ["APPROVED","REJECTED"]: 
+            raise ValueError("Must provide extensionRequest id, reviewer id and approval status!!!")
 
         # Get extension request
         extensionRequests = app.data.driver.db['extensionRequests']
         extension_query = { "_id": ObjectId(_id) }
-        extension_request = extensionRequests.find_one(query, sort=[("_created", -1)])
+        extension_request = extensionRequests.find_one(extension_query, sort=[("_created", -1)])
         if not extension_request: raise ValueError("Extension Request does not exist")
+        if extension_request['status'] not in [ 'REQUESTED' ]: 
+            raise ValueError("Provision Request cannot be reviewed in " + str(extension_request['status']) + " state")
         
         # Get provision request
         provisionRequests = app.data.driver.db['provisionRequests']
         provision_query = { "_id": ObjectId(extension_request['provision_request']) }
-        provision_request = provisionRequests.find_one(query, sort=[("_created", -1)])
+        provision_request = provisionRequests.find_one(provision_query, sort=[("_created", -1)])
         if not provision_request: raise ValueError("Provision Request does not exist")
         if provision_request['status'] not in [ 'DEPLOYED', 'EXPIRED' ]: 
             raise ValueError("Provision Request cannot be extended in state: " + str(provision_request['status']))
@@ -179,7 +131,7 @@ def approveExtensionRequest():
             "$set":
             {
                 "reviewed_by": ObjectId(reviewed_by),
-                "status": "APPROVED",
+                "status": status,
             }
         }
         ret = extensionRequests.update(extension_query, update, upsert = False) 
@@ -187,18 +139,18 @@ def approveExtensionRequest():
 
         # Create response object
         response = {
-            "status": "APPROVED",
+            "status": status,
             "_id": str(provision_request['_id'])
         }
         
         # Create notification for developer (requester)
         create_notification(
-            title = "Provision Request Approved", 
-            description = "Your provision request " + str(provision_request["_id"]) + " has been approved.",
+            title = "Provision Request" + str(status),  
+            description = "Your provision request " + str(provision_request["_id"]) + " has been " + str(status), 
             user = provision_request["requested_by"]
         )
     except ValueError as e:
-        return Response(toJSON(failure_resp(e.message, 400)), 400, mimetype='application/json')
+        return Response(toJSON(failure_resp(str(e), 400)), 400, mimetype='application/json')
     except Exception as e:
-        return Response(toJSON(failure_resp(e.message, 500)), 500, mimetype='application/json')
+        return Response(toJSON(failure_resp(str(e), 500)), 500, mimetype='application/json')
     return Response(toJSON(response), 200, mimetype='application/json')

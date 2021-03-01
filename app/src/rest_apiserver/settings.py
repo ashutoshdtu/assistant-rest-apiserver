@@ -14,6 +14,7 @@ import os
 from rest_apiserver.models import *
 
 API_VERSION = 'v1'
+DEBUG = True
 
 SWAGGER_INFO = {
     'title': 'REST API Server',

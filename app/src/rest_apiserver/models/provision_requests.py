@@ -48,6 +48,7 @@ provisionRequests = {
                 'resource': 'templates',
                 'embeddable': True
             },
+            'required': True
         },
         'status': {
             'type': 'string',
