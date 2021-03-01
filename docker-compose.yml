@@ -1,0 +1,17 @@
+version: '3.3'
+services:
+    assistant-rest-apiserver:
+        container_name: assistant-rest-apiserver
+        environment:
+            - PUID=1000
+            - PGID=1001
+            - TZ=Asia/Kolkata
+        ports:
+            - '8000:8000'
+        # volumes:
+        #     - '/home/ashutosh/Dropbox/services/docker-code-server/config:/config'
+        #     - '/home/ashutosh/Dropbox/workspace:/workspace'
+        restart: unless-stopped
+        image: ashutoshdtu/assistant-rest-apiserver
+    mongodb: 
+      container_name: mongodb

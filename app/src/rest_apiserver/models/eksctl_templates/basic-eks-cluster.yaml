@@ -1,0 +1,15 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: {{ cluster_name }}
+  region: {{ region }}
+
+nodeGroups:
+  - name: ng-1
+    instanceType: {{ instance_type }}
+    desiredCapacity: {{ desired_capacity }}
+    volumeSize: {{ volume_size }}
+    ssh:
+      allow: false 
+      # publicKeyPath: ~/.ssh/ec2_id_rsa.pub
