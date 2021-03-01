@@ -12,13 +12,13 @@ provisionRequests = {
 
     'schema': {
         'description': {'type': 'string', 'required': False, 'minlength': 0,'maxlength': 1000},
-        'expires_by': {'type': 'datetime'}, # time when the resource expires
+        'expires_by': {'type': 'datetime', 'required': True}, # time when the resource expires
         # 'expires_in_hours': { 'type': 'number', 'max': 100000 },
         'resource_type': {              # the type of resource that needs to be provisioned
             'type': 'string',
             'default': 'KUBERNETES',
             'allowed': ['KUBERNETES'],  # TODO: expand to ['KUBERNETES', 'INSTANCE', 'S3BUCKET']
-            # 'required': True
+            'required': True
         },
         'request_type': {               # the type of request: TEMPORARY or PERMANENT
             'type': 'string',

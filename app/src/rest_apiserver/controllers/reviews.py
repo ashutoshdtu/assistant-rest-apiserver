@@ -106,25 +106,26 @@ def approveExtensionRequest():
         provision_query = { "_id": ObjectId(extension_request['provision_request']) }
         provision_request = provisionRequests.find_one(provision_query, sort=[("_created", -1)])
         if not provision_request: raise ValueError("Provision Request does not exist")
-        if provision_request['status'] not in [ 'DEPLOYED', 'EXPIRED' ]: 
+        if provision_request['status'] not in [ 'APPROVED', 'INITIATED', 'DEPLOYED', 'EXPIRED' ]: 
             raise ValueError("Provision Request cannot be extended in state: " + str(provision_request['status']))
         
-        # Update provision request
+        # Update provision request if extension "APPROVED"
         # find new expiration time
-        expires_by = provision_request['expires_by']
-        if provision_request['expires_by']:
-            expires_by = provision_request['expires_by'] + timedelta(hours=extension_request['extend_by'])
-        else:
-            expires_by = datetime.now() + timedelta(hours=extension_request['extend_by'])
-        update = {
-            "$set":
-            {
-                "status": "EXTENDED",
-                "expires_by": expires_by
+        if status is "APPROVED":
+            expires_by = provision_request['expires_by']
+            if provision_request['expires_by']:
+                expires_by = provision_request['expires_by'] + timedelta(hours=extension_request['extend_by'])
+            else:
+                expires_by = datetime.now() + timedelta(hours=extension_request['extend_by'])
+            update = {
+                "$set":
+                {
+                    "status": "EXTENDED",
+                    "expires_by": expires_by
+                }
             }
-        }
-        ret = provisionRequests.update(provision_query, update, upsert = False)
-        logger.debug("provision request update response: " + str(ret))
+            ret = provisionRequests.update(provision_query, update, upsert = False)
+            logger.debug("provision request update response: " + str(ret))
 
         # Update extension request
         update = {
