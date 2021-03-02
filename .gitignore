@@ -40,7 +40,6 @@ __pycache__/  # Exclude the whole folder
 npm-debug.log
 testem.log
 /typings
-/docs
 
 # e2e
 /e2e/*.js
