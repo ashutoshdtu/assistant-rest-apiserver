@@ -64,7 +64,7 @@ provisionRequests = {
                 'EXPIRED',          # Expired
                 'EXTENDED',         # Expiry date extended
                 'PURGE_INITIATED',  # Purge initiated
-                'PURGED'            # Purged successfully
+                'PURGED',           # Purged successfully
                 'PURGE_FAILED'      # Purge failed (notify devops recurringly)
             ]
         }
@@ -90,7 +90,7 @@ extensionRequests = {
     'schema': {
         'reason': {'type': 'string', 'required': True, 'minlength': 1,'maxlength': 1000},
         
-        'status': {
+        'status': {                 # TODO: make it readonly
             'type': 'string',
             'allowed': [
                 'REQUESTED',        # Request initiated by the developer

@@ -6,7 +6,7 @@ import json
 from datetime import datetime, timedelta
 from eve.utils import str_to_date, date_to_rfc1123
 from bson.objectid import ObjectId
-from rest_apiserver import app
+from rest_apiserver import app, redis_queue
 from rest_apiserver.core.utils import toJSON, failure_resp, create_notification
 from flask import jsonify, request, Response
 

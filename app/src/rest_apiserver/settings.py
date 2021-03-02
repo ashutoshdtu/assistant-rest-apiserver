@@ -45,7 +45,10 @@ DOMAIN = {
     'extensionRequests': extensionRequests,
     'quotas': quotas,
     'notifications': notifications,
-    'templates': templates
+    'templates': templates,
+    'estimatedBills': estimatedBills,
+    'instancePricing': instancePricing,
+    'diskPricing': diskPricing
 }
 
 X_DOMAINS = ['http://localhost:8000']  # The domain where Swagger UI is running

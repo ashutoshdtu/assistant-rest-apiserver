@@ -18,7 +18,7 @@ notifications = {
                 'resource': 'users',
                 'embeddable': True,
             },
-            'required': False
+            'required': True
         },
         'channels': {
             'type': 'list',
@@ -26,7 +26,7 @@ notifications = {
                 'type': 'string',
                 'default': 'EMAIL',
                 'allowed': ['EMAIL']    #['EMAIL', 'SLACK', 'SMS']
-            }
+            },
         },
         'status': {
             'type': 'string', 

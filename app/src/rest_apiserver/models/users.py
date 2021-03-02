@@ -58,3 +58,31 @@ roles = {
         'isActive': { 'type': 'boolean', 'default': True },
     },
 }
+
+estimatedBills = {
+    'item_title': 'estimatedBill',
+
+    'item_url': 'regex("[a-zA-Z0-9-_]+")',
+    
+    'resource_methods': ["POST", "GET"],
+    'item_methods': ["GET", "PUT", "DELETE"],
+
+    'datasource': {
+        'source': 'estimatedBills', 
+        'default_sort': [('_created', -1)]
+    },
+
+    'schema': {
+        'estimated_bill': {'type': 'string', 'required': True, 'unique': True, 'minlength': 1,'maxlength': 100},
+        'user': {
+            'type': 'objectid',
+            'data_relation': {
+                'resource': 'users',
+                'embeddable': True,
+            },
+            'required': True
+        },
+        'month': { 'type': 'number', 'required': True, 'min': 1, 'max': 12 },
+        'year': {'type': 'number', 'required': True, 'min': 2000, 'max': 2100}
+    },
+}

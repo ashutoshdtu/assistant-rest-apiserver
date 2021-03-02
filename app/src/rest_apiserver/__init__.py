@@ -28,8 +28,17 @@ logger = logging.getLogger(__name__)
 logger.debug("Loaded " + __name__)
 
 from .server import Server
-app = Server(__name__, settings=SETTINGS_FILE)
+app = Server(__name__, settings=SETTINGS_FILE) #, static_folder=STATIC_DIR)
 app.config['SWAGGER_HOST'] = app.config['HOST_NAME']
+
+import redis
+from rq import Queue
+redis_conn = redis.Redis(
+    host=app.config["REDIS_HOST"],
+    port=app.config["REDIS_PORT"],
+    password=app.config["REDIS_PASSWORD"],
+)
+redis_queue = Queue(connection=redis_conn)
 
 # from . import core
 # from . import rpc
