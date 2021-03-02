@@ -175,3 +175,52 @@ $ http POST 127.0.0.1:8000/v1/extensionRequests \
 ## Extension reviews
 $ http POST 127.0.0.1:8000/v1/approveExtensionRequest _id="603d7484f0b3b48214b53f18" reviewed_by="603d334bf8d6f8da9927f0b4" status="APPROVED"
 ```
+
+## API Documentation
+
+Full API documentation can be found on ```/docs``` route but you can also check out PDF:
+https://github.com/ashutoshdtu/assistant-rest-apiserver/raw/main/API%20documentation.pdf
+
+```v1/approveProvisionRequest``` and ```v1/approveExtensionRequest``` are yet to be added to the documentation. 
+
+### ```v1/approveProvisionRequest```:
+
+**HTTP method:** POST
+**Request:**
+
+```json
+{
+    "_id": "<id>",              # Provision request id
+    "reviewed_by": "<userid>",  # Reviewer user id
+    "status": "APPROVED"        # APPROVED or REJECTED
+}
+```
+
+**Response:**
+```json
+{
+    "status": "APPROVED",
+    "_id": "<id>"
+}
+```
+
+### ```v1/approveExtensionRequest```:
+
+**HTTP method:** POST
+**Request:**
+
+```json
+{
+    "_id": "<id>",              # Provision request id
+    "reviewed_by": "<userid>",  # Reviewer user id
+    "status": "REJECTED"        # APPROVED or REJECTED
+}
+```
+
+**Response:**
+```json
+{
+    "status": "REJECTED",
+    "_id": "<id>"
+}
+```
