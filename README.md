@@ -32,7 +32,10 @@ REST API Server for Cloud Provisioning Assistant
 
 ## DESIGN DECISIONS:
 
-**1. Microservices pattern:** RESTful (and Event sourcing
+**1. Microservices pattern:** RESTful and Event sourcing
+
+[![High Level Design](https://github.com/ashutoshdtu/assistant-rest-apiserver/raw/main/docs/high-level-design.jpg)]
+
 
 **2. DB:** MongoDB
 
@@ -179,7 +182,7 @@ $ http POST 127.0.0.1:8000/v1/approveExtensionRequest _id="603d7484f0b3b48214b53
 ## API Documentation
 
 Full API documentation can be found on ```/docs``` route but you can also check out PDF:
-https://github.com/ashutoshdtu/assistant-rest-apiserver/raw/main/API%20documentation.pdf
+https://github.com/ashutoshdtu/assistant-rest-apiserver/raw/main/docs/API%20documentation.pdf
 
 ```v1/approveProvisionRequest``` and ```v1/approveExtensionRequest``` are yet to be added to the documentation. 
 
