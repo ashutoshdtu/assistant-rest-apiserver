@@ -110,13 +110,9 @@ def approveExtensionRequest():
             raise ValueError("Provision Request cannot be extended in state: " + str(provision_request['status']))
         
         # Update provision request if extension "APPROVED"
-        # find new expiration time
         if status is "APPROVED":
-            expires_by = provision_request['expires_by']
-            if provision_request['expires_by']:
-                expires_by = provision_request['expires_by'] + timedelta(hours=extension_request['extend_by'])
-            else:
-                expires_by = datetime.now() + timedelta(hours=extension_request['extend_by'])
+            # find new expiration time
+            expires_by = str_to_date(provision_request['expires_by']) + timedelta(hours=extension_request['extend_by'])
             update = {
                 "$set":
                 {

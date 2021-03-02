@@ -38,7 +38,7 @@ securityContext: {}
 
 service:
   name: rest-apiserver
-  type: NodePort
+  type: ClusterIP
   port: 8000
   # targetPort: 8000
 
