@@ -1,3 +1,12 @@
+"""
+    rest_apiserver.blueprints.config
+    ~~~~~~~~~~~~~~~~~
+
+    Flask blueprint for config API routes.
+
+    :license: GPL-3.0, see LICENSE for more details.
+"""
+
 import logging
 logger = logging.getLogger(__name__)
 logger.debug("Loaded " + __name__)

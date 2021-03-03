@@ -9,3 +9,5 @@ werkzeug==0.16.1
 
 redis==3.5.2
 rq
+# bson
+# flask

@@ -1,3 +1,12 @@
+"""
+    rest_apiserver.core.utils
+    ~~~~~~~~~~~~~~~~~
+
+    Various utility functions. 
+
+    :license: GPL-3.0, see LICENSE for more details.
+"""
+
 import logging
 logger = logging.getLogger(__name__)
 logger.debug("Loaded " + __name__)
@@ -72,9 +81,10 @@ def create_notification(title, description, user):
             raise Exception("Notification creation failed")
     except Exception as e:
         # TODO: handle exceptions
+        logger.error("Error creating notification: " + str(e), exc_info=1)
         return 1
     return 0
-            
+
  
 # # Execute a function call in thread
 # def threaded(call, *args, **kwargs):

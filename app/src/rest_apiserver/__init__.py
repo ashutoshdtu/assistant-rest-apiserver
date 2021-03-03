@@ -3,7 +3,9 @@
 """
     rest_apiserver
     ~~~~~~~~~~~~
+    
     REST API Server for Cloud Provisioning Assistant.
+
     :license: GPL-3.0, see LICENSE for more details.
 """
 
@@ -17,7 +19,7 @@ SETTINGS_FILE = os.path.join(BASE_DIR, 'settings.py')
 
 __author__ = """Ashutosh Mishra"""
 __email__ = 'ashutoshdtu@gmail.com'
-__version__ = '0.1.0'
+__version__ = '0.1.1'
 
 
 import logging

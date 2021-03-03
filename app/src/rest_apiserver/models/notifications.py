@@ -1,3 +1,12 @@
+"""
+    rest_apiserver.models.notifications
+    ~~~~~~~~~~~~~~~~~
+
+    Schema for Notifications APIs. 
+
+    :license: GPL-3.0, see LICENSE for more details.
+"""
+
 notifications = {
     'item_title': 'notification',
     

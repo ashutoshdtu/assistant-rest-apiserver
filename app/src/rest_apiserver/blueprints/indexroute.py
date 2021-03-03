@@ -1,3 +1,12 @@
+"""
+    rest_apiserver.blueprints.indexroute
+    ~~~~~~~~~~~~~~~~~
+
+    Flask blueprint for the root API route listing all the available sunbroutes.
+
+    :license: GPL-3.0, see LICENSE for more details.
+"""
+
 import logging
 logger = logging.getLogger(__name__)
 logger.debug("Loaded " + __name__)

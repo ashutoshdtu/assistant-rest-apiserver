@@ -18,7 +18,7 @@ DEBUG = True
 
 SWAGGER_INFO = {
     'title': 'REST API Server',
-    'version': '0.1.0',
+    'version': '0.1.1',
     'description': 'REST APIs for Cloud Provisioning Assistant',
     'termsOfService': 'For demo purposes only. Use at your own risk',
     'contact': {

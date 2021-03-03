@@ -1,3 +1,11 @@
+"""
+    rest_apiserver.models.templates
+    ~~~~~~~~~~~~~~~~~
+
+    Schema for resource templates APIs. 
+
+    :license: GPL-3.0, see LICENSE for more details.
+"""
 
 templates = {
     'item_title': 'template',
@@ -13,7 +21,14 @@ templates = {
     'schema': {
         '_id': {'type': 'string', 'regex': '[a-z1-9-]+'}, #, 'unique': True}, # custom id type
         'name': {'type': 'string', 'required': True},
-        'clusteryaml': {'type': 'string'},
+        # URL for template file (cluster.yaml for eksctl)
+        'url': {'type': 'string', 'required': True},
+        'type': {
+            'type': 'string', 
+            'required': True, 
+            'default': 'EKSCTL', 
+            'allowed': ['EKSCTL']
+        },
         'params': {
             'type': 'list',
             'schema': {

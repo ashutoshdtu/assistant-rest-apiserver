@@ -1,3 +1,12 @@
+"""
+    rest_apiserver.controllers.reviews
+    ~~~~~~~~~~~~~~~~~
+
+    APIs to approve Provision and Extension Requests. 
+
+    :license: GPL-3.0, see LICENSE for more details.
+"""
+
 import logging
 logger = logging.getLogger(__name__)
 logger.info("Loaded " + __name__)
@@ -9,9 +18,6 @@ from bson.objectid import ObjectId
 from rest_apiserver import app, redis_queue
 from rest_apiserver.core.utils import toJSON, failure_resp, create_notification
 from flask import jsonify, request, Response
-
-# reviewProvisionRequest
-# reviewExtensionRequest
 
 @app.route('/'+app.config['API_VERSION']+'/approveProvisionRequest', methods=['POST'])
 def approveProvisionRequest():
@@ -26,7 +32,7 @@ def approveProvisionRequest():
         # Get request parameters and perform sanity check
         if not request.json:
             raise ValueError("Empty json body provided!!!")
-        
+
         _id = request.json['_id'] if '_id' in request.json else None
         reviewed_by = request.json['reviewed_by'] if 'reviewed_by' in request.json else None
         status = request.json['status'] if 'status' in request.json else None
@@ -110,7 +116,7 @@ def approveExtensionRequest():
             raise ValueError("Provision Request cannot be extended in state: " + str(provision_request['status']))
         
         # Update provision request if extension "APPROVED"
-        if status is "APPROVED":
+        if status == "APPROVED":
             # find new expiration time
             expires_by = str_to_date(provision_request['expires_by']) + timedelta(hours=extension_request['extend_by'])
             update = {

@@ -1,3 +1,12 @@
+"""
+    rest_apiserver.__main__
+    ~~~~~~~~~~~~~~~~~
+
+    Entry point for rest_apiserver.
+
+    :license: GPL-3.0, see LICENSE for more details.
+"""
+
 import logging
 logger = logging.getLogger(__name__)
 logger.info("Loaded " + __name__)

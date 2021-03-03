@@ -1,3 +1,12 @@
+"""
+    rest_apiserver.models.provision_requests
+    ~~~~~~~~~~~~~~~~~
+
+    Schema for Provision Request and Extension Request APIs. 
+
+    :license: GPL-3.0, see LICENSE for more details.
+"""
+
 # API schema for provision requests
 provisionRequests = {
     'item_title': 'provisionRequest',
@@ -127,80 +136,6 @@ extensionRequests = {
                 'embeddable': True,
             },
             'required': True
-        }
-    }
-}
-
-# API schemas for quotas
-quotas = {
-    'item_title': 'quota',
-
-    'resource_methods': ["POST", "GET"],
-    'item_methods': ["GET", "PUT", "PATCH", "DELETE"],
-
-    'datasource': {
-        'source': 'quotas', 
-        'default_sort': [('_created', -1)]
-    },
-
-    'schema': {
-        # 'quota_type': {'type': 'string', 'required': True, 'minlength': 1,'maxlength': 100},
-        'quota_type': {
-            'type': 'string',
-            'default': 'TEMPORARY',
-            'allowed': ['TEMPORARY', 'PERMANENT']
-        },
-        'user': {
-            'type': 'objectid',
-            'data_relation': {
-                'resource': 'users',
-                'embeddable': True,
-            },
-            'required': False
-        },
-        'role': {
-            'type': 'string',
-            'data_relation': {
-                'resource': 'roles',
-                'embeddable': True,
-                'field': 'role',
-            },
-            'required': False
-        },
-        # cost per in USD
-        'cost': { 'type': 'number', 'default': 100, 'max': 10000},
-        'machines': {
-            'type': 'list',
-            'schema': {
-                'type': 'dict',
-                'schema': {
-                    'instance_type': { 'type': 'string', 'minlength': 1, 'maxlength': 30, 'required': True },
-                    'region': { 'type': 'string', 'required': True },
-                    'hours': { 'type': 'number', 'required': True, 'max': 50000 }
-                },
-            },
-        },
-        'disk': {
-            'type': 'list',
-            'schema': {
-                'type': 'dict',
-                'schema': {
-                    'disk_type': { 'type': 'string', 'minlength': 1, 'maxlength': 30, 'required': True },
-                    'region': { 'type': 'string', 'required': True },
-                    'gbhours': { 'type': 'number', 'required': True, 'max': 1000000 } # gb * hours
-                },
-            },
-        },
-        's3': {
-            'type': 'list',
-            'schema': {
-                'type': 'dict',
-                'schema': {
-                    'bucket_type': { 'type': 'string', 'minlength': 1, 'maxlength': 30, 'required': True },
-                    'region': { 'type': 'string', 'required': True },
-                    'gbhours': { 'type': 'number', 'required': True, 'max': 1000000 } # gb * hours
-                },
-            },
         }
     }
 }

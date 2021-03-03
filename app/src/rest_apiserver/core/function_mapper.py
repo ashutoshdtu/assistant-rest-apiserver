@@ -1,3 +1,12 @@
+"""
+    rest_apiserver.core.function_mapper
+    ~~~~~~~~~~~~~~~~~
+
+    Class to build a dict of functions using decorators. 
+
+    :license: GPL-3.0, see LICENSE for more details.
+"""
+
 import logging
 logger = logging.getLogger(__name__)
 logger.debug("Loaded " + __name__)

@@ -34,3 +34,4 @@ def purge_resource(self, _id):
     _id : str
         id of provisionRequest
     """
+    pass

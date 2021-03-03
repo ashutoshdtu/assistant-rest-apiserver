@@ -1,3 +1,12 @@
+"""
+    rest_apiserver.models.aws_pricing
+    ~~~~~~~~~~~~~~~~~
+
+    Schema for various AWS Resource Pricing APIs. 
+
+    :license: GPL-3.0, see LICENSE for more details.
+"""
+
 """ AWS resource pricing APIs"""
 # TODO: integrate with AWS Price list service API and depricate below APIs
 # https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/using-pelong.html

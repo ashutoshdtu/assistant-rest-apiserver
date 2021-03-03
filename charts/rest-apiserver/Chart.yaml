@@ -1,10 +1,11 @@
 apiVersion: v2
 name: assistant-rest-apiserver
 home: https://ashutoshmishra.net
-version: 0.1.0
+version: 0.1.1
 description: Helm chart for REST API Server.
 sources:
 - https://github.com/ashutoshdtu/assistant-rest-apiserver
+
 maintainers:
 - name: Ashutosh Mishra
   email: ashutoshdtu@gmail.com

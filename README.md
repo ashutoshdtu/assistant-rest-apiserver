@@ -17,24 +17,26 @@ REST API Server for Cloud Provisioning Assistant
 
 ## TODOS:
 
-1. Implement the following Redis queue consumer services:
+- [ ] Implement the following Redis queue consumer services:
 
-    * **Analyse Provision Request**
-    * **Provision Resource:** Do actual provisioning & produce kubeconfig
-    * **Purge Resource**
+    - [ ] **Analyse Provision Request**
+    - [ ] **Provision Resource:** Do actual provisioning & produce kubeconfig
+    - [ ] **Purge Resource**
 
-2. Add Jobs to queue
-3. Send actual notifications.
-4. Integrate with AWS IAM or Implement ACL.
-5. Add support for services other than kubernetes.
-6. Send notifications to developers when their environment is about to expire.
-7. Web based UI.
+- [ ] Add Jobs to queue
+- [ ] Send actual notifications.
+- [ ] Integrate with AWS IAM or Implement ACL.
+- [ ] Add support for services other than kubernetes.
+- [ ] Send notifications to developers when their environment is about to expire.
+- [ ] Web based UI.
+- [ ] **Add unit tests** 
+- [ ] Configure CI on Travis 
 
 ## DESIGN DECISIONS:
 
 **1. Microservices pattern:** RESTful and Event sourcing
 
-[![High Level Design](https://github.com/ashutoshdtu/assistant-rest-apiserver/raw/main/docs/high-level-design.jpg)]
+![High Level Design](https://github.com/ashutoshdtu/assistant-rest-apiserver/raw/main/docs/high-level-design.jpg)
 
 
 **2. DB:** MongoDB
@@ -114,11 +116,11 @@ To uninstall
 $ helm uninstall assistant-rest-apiserver
 ```
 
-**To build and run the code using docker:**
+**To build Dockerfile and run locally:**
 
 ```bash
-$ sudo docker build  -t ashutoshdtu/assistant-rest-apiserver:0.1.0 .
-$ sudo docker run --rm -p 8000:8000/tcp ashutoshdtu/assistant-rest-apiserver:0.1.0
+$ sudo docker build  -t ashutoshdtu/assistant-rest-apiserver:0.1.1 .
+$ sudo docker run --rm -p 8000:8000/tcp ashutoshdtu/assistant-rest-apiserver:0.1.1
 ```
 
 ### 4. Install redis
@@ -147,8 +149,8 @@ $ http POST 127.0.0.1:8000/v1/users name=KKK email=kkk@xyz.com username=kkk role
 $ http POST 127.0.0.1:8000/v1/users name=LLL email=lll@xyz.com username=lll roles:='["devops"]'
 
 $ http POST 127.0.0.1:8000/v1/templates \
-    _id="basic-eks-cluster" name="Basic EKS Cluster" \
-    clusteryaml="https://raw.githubusercontent.com/ashutoshdtu/assistant-rest-apiserver/main/app/src/rest_apiserver/models/eksctl_templates/basic-eks-cluster.yaml" \
+    _id="basic-eks-cluster" name="Basic EKS Cluster" type="EKSCTL" \
+    url="https://raw.githubusercontent.com/ashutoshdtu/assistant-rest-apiserver/main/app/src/rest_apiserver/models/eksctl_templates/basic-eks-cluster.yaml" \
     params:='["cluster_name", "region", "instance_type", "desired_capacity", "volume_size"]'
 ```
 
